@@ -1,4 +1,4 @@
-﻿# Kalawakan 🌌
+# Kalawakan 🌌
 
 > **Kalawakan** *(Tagalog for "outer space" / "cosmos")* is an interactive 3D WebGL particle simulation featuring real-time AI hand gesture tracking. Morph between intricate celestial bodies, biological structures, and mythic creations using your hands or keyboard/mouse.
 
