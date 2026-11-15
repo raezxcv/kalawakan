@@ -52,14 +52,15 @@
   #cam .in{position:absolute;inset:0;transform:scaleX(-1);pointer-events:none}
   #cam video,#cam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
   
-  .cam-resizer{position:absolute;z-index:7;width:20px;height:20px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);transition:color .18s ease;touch-action:none}
-  .cam-resizer:hover{color:#ffffff}
-  .cam-resizer-tl{top:0;left:0;cursor:nwse-resize}
-  .cam-resizer-tr{top:0;right:0;cursor:nesw-resize}
-  .cam-resizer-bl{bottom:0;left:0;cursor:nesw-resize}
-  .cam-resizer-br{bottom:0;right:0;cursor:nwse-resize}
+  .cam-resizer{position:absolute;z-index:10;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#ffffff;background:rgba(18,18,22,0.85);border:1px solid rgba(255,255,255,0.22);border-radius:6px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,0.6);transition:background .18s ease,border-color .18s ease,transform .18s ease;touch-action:none}
+  .cam-resizer:hover{background:rgba(255,255,255,0.25);border-color:rgba(255,255,255,0.5);transform:scale(1.1)}
+  .cam-resizer-tl{top:5px;left:5px;cursor:nwse-resize}
+  .cam-resizer-tr{top:5px;right:5px;cursor:nesw-resize}
+  .cam-resizer-bl{bottom:5px;left:5px;cursor:nesw-resize}
+  .cam-resizer-br{bottom:5px;right:5px;cursor:nwse-resize}
 
-  #cam-expand{position:absolute;top:8px;right:8px;z-index:8;width:26px;height:26px;border-radius:6px;background:rgba(18,18,20,0.75);border:1px solid rgba(255,255,255,0.15);color:#d4d4d8;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:all .18s ease;touch-action:manipulation;backdrop-filter:blur(8px)}
+  /* Expand button is mobile-only; hidden on desktop where drag & resize are used */
+  #cam-expand{display:none;position:absolute;top:8px;right:8px;z-index:8;width:26px;height:26px;border-radius:6px;background:rgba(18,18,20,0.75);border:1px solid rgba(255,255,255,0.15);color:#d4d4d8;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:all .18s ease;touch-action:manipulation;backdrop-filter:blur(8px)}
   #cam-expand:hover{background:rgba(255,255,255,0.15);color:#ffffff;border-color:rgba(255,255,255,0.3)}
   
   /* --- Minimalist Modern Glassmorphism Modal --- */
@@ -127,6 +128,7 @@
     /* BIGGER CAMERA PREVIEW ON MOBILE */
     #cam{cursor:default;width:175px;height:132px;bottom:64px;right:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.8)}
     #cam.expanded{width:calc(100vw - 24px);height:215px;bottom:64px;right:12px}
+    #cam-expand{display:flex}
     .cam-resizer{display:none !important}
 
     /* Perfectly Fitted Single-Row Mobile Toolbar */
@@ -202,13 +204,29 @@
     <video id="video" playsinline muted></video>
     <canvas id="ov" width="320" height="240"></canvas>
   </div>
-  <div class="cam-resizer cam-resizer-tl" data-dir="tl" title="Resize">
-    <svg width="8" height="8" viewBox="0 0 10 10" fill="currentColor"><path d="M0 0h10L0 10z" opacity="0.6"/></svg>
+  <div class="cam-resizer cam-resizer-tl" data-dir="tl" title="Resize camera">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="2" y1="11" x2="11" y2="2"></line>
+      <line x1="2" y1="7" x2="7" y2="2"></line>
+      <line x1="2" y1="3" x2="3" y2="2"></line>
+    </svg>
   </div>
-  <div class="cam-resizer cam-resizer-tr" data-dir="tr" title="Resize"></div>
-  <div class="cam-resizer cam-resizer-bl" data-dir="bl" title="Resize"></div>
-  <div class="cam-resizer cam-resizer-br" data-dir="br" title="Resize">
-    <svg width="8" height="8" viewBox="0 0 10 10" fill="currentColor"><path d="M10 10H0L10 0z" opacity="0.6"/></svg>
+  <div class="cam-resizer cam-resizer-tr" data-dir="tr" title="Resize camera">
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M5 2h9v9M14 2L7 9"/>
+    </svg>
+  </div>
+  <div class="cam-resizer cam-resizer-bl" data-dir="bl" title="Resize camera">
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M11 14H2V5M2 14l7-7"/>
+    </svg>
+  </div>
+  <div class="cam-resizer cam-resizer-br" data-dir="br" title="Resize camera">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="14" y1="5" x2="5" y2="14"></line>
+      <line x1="14" y1="9" x2="9" y2="14"></line>
+      <line x1="14" y1="13" x2="13" y2="14"></line>
+    </svg>
   </div>
   <button id="cam-expand" title="Expand camera preview" aria-label="Expand camera preview">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
