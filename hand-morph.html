@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Kalawakan · 3D Hand Morph</title>
+<title>Kalawakan</title>
 <meta name="description" content="Interactive 3D particle morphing cosmos with real-time hand tracking. Control 20,000 glowing particles with your hands or touch.">
 <meta name="author" content="rei">
 <meta name="theme-color" content="#09090b">
 
 <!-- Social Preview & OpenGraph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Kalawakan · 3D Hand Morph">
+<meta property="og:title" content="Kalawakan">
 <meta property="og:description" content="Interactive 3D particle morphing cosmos with real-time hand tracking. Control 20,000 particles with your hands or touch. Made by rei.">
 <meta property="og:site_name" content="Kalawakan">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kalawakan · 3D Hand Morph">
+<meta name="twitter:title" content="Kalawakan">
 <meta name="twitter:description" content="Interactive 3D particle morphing cosmos with real-time hand tracking by rei.">
 
 <!-- Favicon / Logo Emblem -->
@@ -45,11 +45,21 @@
   #help{margin-top:12px;font-size:12px;line-height:1.6;color:#a1a1aa}
   #help b{color:#ffffff;font-weight:600} #help i{color:#d4d4d8;font-style:normal;font-weight:500}
   
-  /* --- Camera Preview (Responsive & Resizable) --- */
-  #cam{position:fixed;right:20px;bottom:72px;width:240px;height:180px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.14);background:#09090b;z-index:15;box-shadow:0 16px 40px rgba(0,0,0,0.7);transition:all .3s cubic-bezier(0.16,1,0.3,1)}
-  #cam .in{position:absolute;inset:0;transform:scaleX(-1)}
-  #cam video,#cam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  #cam-expand{position:absolute;top:8px;right:8px;z-index:6;width:26px;height:26px;border-radius:6px;background:rgba(18,18,20,0.75);border:1px solid rgba(255,255,255,0.15);color:#d4d4d8;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:all .18s ease;touch-action:manipulation;backdrop-filter:blur(8px)}
+  /* --- Camera Preview (Desktop Draggable & Resizable) --- */
+  #cam{position:fixed;right:20px;bottom:72px;width:240px;height:180px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.15);background:#09090b;z-index:15;box-shadow:0 16px 40px rgba(0,0,0,0.7);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;transition:box-shadow .2s ease,border-color .2s ease}
+  #cam.dragging{cursor:grabbing !important;box-shadow:0 24px 60px rgba(0,0,0,0.85),0 0 0 1px rgba(255,255,255,0.3) !important;transition:none !important}
+  #cam.resizing{cursor:nwse-resize !important;transition:none !important}
+  #cam .in{position:absolute;inset:0;transform:scaleX(-1);pointer-events:none}
+  #cam video,#cam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+  
+  .cam-resizer{position:absolute;z-index:7;width:20px;height:20px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);transition:color .18s ease;touch-action:none}
+  .cam-resizer:hover{color:#ffffff}
+  .cam-resizer-tl{top:0;left:0;cursor:nwse-resize}
+  .cam-resizer-tr{top:0;right:0;cursor:nesw-resize}
+  .cam-resizer-bl{bottom:0;left:0;cursor:nesw-resize}
+  .cam-resizer-br{bottom:0;right:0;cursor:nwse-resize}
+
+  #cam-expand{position:absolute;top:8px;right:8px;z-index:8;width:26px;height:26px;border-radius:6px;background:rgba(18,18,20,0.75);border:1px solid rgba(255,255,255,0.15);color:#d4d4d8;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:all .18s ease;touch-action:manipulation;backdrop-filter:blur(8px)}
   #cam-expand:hover{background:rgba(255,255,255,0.15);color:#ffffff;border-color:rgba(255,255,255,0.3)}
   
   /* --- Minimalist Modern Glassmorphism Modal --- */
@@ -112,8 +122,9 @@
     #help.open{display:block}
     
     /* BIGGER CAMERA PREVIEW ON MOBILE */
-    #cam{width:175px;height:132px;bottom:64px;right:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.8)}
+    #cam{cursor:default;width:175px;height:132px;bottom:64px;right:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.8)}
     #cam.expanded{width:calc(100vw - 24px);height:215px;bottom:64px;right:12px}
+    .cam-resizer{display:none !important}
 
     /* Tidy, single-row mobile toolbar */
     #bar{bottom:12px;padding:4px 6px;gap:5px;max-width:98vw;justify-content:flex-start}
@@ -172,13 +183,21 @@
   </div>
 </div>
 
-<!-- Camera View with Resize Toggle -->
-<div id="cam">
+<!-- Camera View with Drag & Resize (Desktop) -->
+<div id="cam" title="Drag to move, corners to resize">
   <div class="in">
     <video id="video" playsinline muted></video>
     <canvas id="ov" width="320" height="240"></canvas>
   </div>
-  <button id="cam-expand" title="Resize camera preview" aria-label="Resize camera preview">
+  <div class="cam-resizer cam-resizer-tl" data-dir="tl" title="Resize">
+    <svg width="8" height="8" viewBox="0 0 10 10" fill="currentColor"><path d="M0 0h10L0 10z" opacity="0.6"/></svg>
+  </div>
+  <div class="cam-resizer cam-resizer-tr" data-dir="tr" title="Resize"></div>
+  <div class="cam-resizer cam-resizer-bl" data-dir="bl" title="Resize"></div>
+  <div class="cam-resizer cam-resizer-br" data-dir="br" title="Resize">
+    <svg width="8" height="8" viewBox="0 0 10 10" fill="currentColor"><path d="M10 10H0L10 0z" opacity="0.6"/></svg>
+  </div>
+  <button id="cam-expand" title="Expand camera preview" aria-label="Expand camera preview">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
     </svg>
@@ -205,9 +224,9 @@
       </svg>
     </div>
 
-    <div class="card-badge">Kalawakan</div>
+    <div class="card-badge">Interactive 3D</div>
 
-    <h2 class="card-title">Hand Morph</h2>
+    <h2 class="card-title">Kalawakan</h2>
 
     <p class="card-desc">
       Control a living cosmos of 20,000 glowing particles with your hands. Morph smoothly between Saturn, DNA, Robot, Dragon, and Galaxy in real-time.
@@ -934,6 +953,129 @@ if (camExpandBtn) {
     document.getElementById("cam").classList.toggle("expanded");
   };
 }
+
+// --- Desktop Draggable & Resizable Camera Feed ---
+(function initDraggableCam(){
+  const cam = document.getElementById("cam");
+  if (!cam || isMobile) return;
+
+  let isDragging = false;
+  let isResizing = false;
+  let currentDir = "";
+  let startX = 0, startY = 0;
+  let startLeft = 0, startTop = 0, startW = 0, startH = 0;
+
+  function ensureAbsolutePosition() {
+    const rect = cam.getBoundingClientRect();
+    cam.style.left = rect.left + "px";
+    cam.style.top = rect.top + "px";
+    cam.style.right = "auto";
+    cam.style.bottom = "auto";
+    return rect;
+  }
+
+  cam.addEventListener("pointerdown", (e) => {
+    if (e.target.closest("#cam-expand, button")) return;
+
+    const resizer = e.target.closest(".cam-resizer");
+    if (resizer) {
+      isResizing = true;
+      currentDir = resizer.dataset.dir || "br";
+      const rect = ensureAbsolutePosition();
+      startX = e.clientX;
+      startY = e.clientY;
+      startLeft = rect.left;
+      startTop = rect.top;
+      startW = rect.width;
+      startH = rect.height;
+      cam.classList.add("resizing");
+      cam.setPointerCapture(e.pointerId);
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+
+    // Window dragging
+    isDragging = true;
+    const rect = ensureAbsolutePosition();
+    startX = e.clientX;
+    startY = e.clientY;
+    startLeft = rect.left;
+    startTop = rect.top;
+    cam.classList.add("dragging");
+    cam.setPointerCapture(e.pointerId);
+    e.stopPropagation();
+    e.preventDefault();
+  });
+
+  cam.addEventListener("pointermove", (e) => {
+    if (isDragging) {
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      const rect = cam.getBoundingClientRect();
+      const minX = 8;
+      const maxX = window.innerWidth - rect.width - 8;
+      const minY = 8;
+      const maxY = window.innerHeight - rect.height - 8;
+
+      const newLeft = Math.max(minX, Math.min(maxX, startLeft + dx));
+      const newTop = Math.max(minY, Math.min(maxY, startTop + dy));
+
+      cam.style.left = newLeft + "px";
+      cam.style.top = newTop + "px";
+      e.stopPropagation();
+    } else if (isResizing) {
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      const minW = 160, maxW = Math.min(750, window.innerWidth - 32);
+      const minH = 120, maxH = Math.min(560, window.innerHeight - 32);
+
+      let newW = startW;
+      let newH = startH;
+      let newLeft = startLeft;
+      let newTop = startTop;
+
+      if (currentDir === "br") {
+        newW = Math.max(minW, Math.min(maxW, startW + dx));
+        newH = Math.round(newW * 0.75); // lock 4:3 standard video aspect ratio
+      } else if (currentDir === "tl") {
+        newW = Math.max(minW, Math.min(maxW, startW - dx));
+        newH = Math.round(newW * 0.75);
+        newLeft = startLeft + (startW - newW);
+        newTop = startTop + (startH - newH);
+      } else if (currentDir === "tr") {
+        newW = Math.max(minW, Math.min(maxW, startW + dx));
+        newH = Math.round(newW * 0.75);
+        newTop = startTop + (startH - newH);
+      } else if (currentDir === "bl") {
+        newW = Math.max(minW, Math.min(maxW, startW - dx));
+        newH = Math.round(newW * 0.75);
+        newLeft = startLeft + (startW - newW);
+      }
+
+      if (newLeft >= 4 && newLeft + newW <= window.innerWidth - 4 &&
+          newTop >= 4 && newTop + newH <= window.innerHeight - 4) {
+        cam.style.width = newW + "px";
+        cam.style.height = newH + "px";
+        cam.style.left = newLeft + "px";
+        cam.style.top = newTop + "px";
+      }
+      e.stopPropagation();
+    }
+  });
+
+  const stopDragOrResize = (e) => {
+    if (isDragging || isResizing) {
+      isDragging = false;
+      isResizing = false;
+      cam.classList.remove("dragging", "resizing");
+      try { cam.releasePointerCapture(e.pointerId); } catch(_) {}
+    }
+  };
+
+  cam.addEventListener("pointerup", stopDragOrResize);
+  cam.addEventListener("pointercancel", stopDragOrResize);
+})();
 
 /* film grain texture */
 (function(){ const c=document.createElement("canvas"); c.width=c.height=160; const g=c.getContext("2d"), im=g.createImageData(160,160);
