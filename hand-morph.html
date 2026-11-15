@@ -98,13 +98,16 @@
   .card-author a:hover{color:#ffffff;text-decoration:underline}
   #start-error{display:none;color:#f87171;font-size:12.5px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:8px 14px;max-width:380px}
 
-  /* --- Bottom Toolbar (Floating Pill Navigation) --- */
-  #bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:6px;align-items:center;justify-content:center;width:auto;max-width:96vw;z-index:15;background:rgba(18,18,20,0.75);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,0.5);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  /* --- Bottom Toolbar (Responsive Floating Pill Navigation) --- */
+  #bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:6px;align-items:center;justify-content:center;width:auto;max-width:calc(100vw - 24px);z-index:15;background:rgba(18,18,20,0.8);padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.14);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,0.55);overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;box-sizing:border-box;touch-action:pan-x}
   #bar::-webkit-scrollbar{display:none}
-  #bar button{flex-shrink:0;background:rgba(255,255,255,0.06);color:#d4d4d8;border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;touch-action:manipulation;white-space:nowrap;transition:all .18s ease;display:inline-flex;align-items:center;gap:4px}
+  #bar button{flex-shrink:0;background:rgba(255,255,255,0.06);color:#d4d4d8;border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:500;cursor:pointer;touch-action:manipulation;white-space:nowrap;transition:all .18s ease;display:inline-flex;align-items:center;justify-content:center;gap:4px;user-select:none;-webkit-user-select:none}
   #bar button:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25);color:#ffffff}
-  #bar button.on{background:#ffffff;color:#09090b;border-color:#ffffff;font-weight:600;box-shadow:0 2px 10px rgba(255,255,255,0.2)}
+  #bar button.on{background:#ffffff;color:#09090b;border-color:#ffffff;font-weight:600;box-shadow:0 2px 10px rgba(255,255,255,0.25)}
   #bar button.opt{border-style:dashed;border-color:rgba(255,255,255,0.2)}
+  .b-num{display:inline-block;font-size:10.5px;opacity:.65;font-weight:700;line-height:1}
+  #bar button.on .b-num{opacity:.9;color:#09090b}
+  .b-key{font-size:10px;opacity:.65;margin-left:1px}
 
   /* --- Accessibility & Mobile Layout Improvements --- */
   @media(prefers-reduced-motion: reduce){
@@ -126,9 +129,19 @@
     #cam.expanded{width:calc(100vw - 24px);height:215px;bottom:64px;right:12px}
     .cam-resizer{display:none !important}
 
-    /* Tidy, single-row mobile toolbar */
-    #bar{bottom:12px;padding:4px 6px;gap:5px;max-width:98vw;justify-content:flex-start}
-    #bar button{padding:6px 10px;font-size:11px}
+    /* Perfectly Fitted Single-Row Mobile Toolbar */
+    #bar{bottom:12px;padding:4px 8px;gap:4px;max-width:calc(100vw - 16px);justify-content:center;scroll-snap-type:x proximity}
+    #bar button{padding:6px 9px;font-size:11.5px;gap:3px;scroll-snap-align:center}
+    .b-key{display:none} /* Hide keyboard shortcut on mobile */
+  }
+  @media(max-width:480px){
+    #bar{padding:3px 6px;gap:3px;max-width:calc(100vw - 12px)}
+    #bar button{padding:5px 7px;font-size:11px;gap:2.5px}
+    .b-num{font-size:10px}
+  }
+  @media(max-width:360px){
+    #bar{padding:3px 4px;gap:2px;max-width:calc(100vw - 8px);justify-content:flex-start}
+    #bar button{padding:5px 5.5px;font-size:10px;gap:2px}
 
     #start-card{padding:24px 18px;gap:12px;border-radius:20px}
     .hero-logo-svg{width:48px;height:48px}
@@ -917,7 +930,8 @@ function setShape(i){
 const bar=document.getElementById("bar");
 SHAPES.forEach((s,i)=>{
   const b=document.createElement("button"); b.dataset.i=i;
-  b.textContent=`${i+1} ${s.name}`;
+  b.setAttribute("aria-label", `Select ${s.name}`);
+  b.innerHTML=`<span class="b-num">${i+1}</span><span class="b-name">${s.name}</span>`;
   if(i===START) b.classList.add("on");
   b.onclick=()=>setShape(i); bar.appendChild(b);
 });
@@ -930,7 +944,8 @@ function updateRoleHelp(){
   }
 }
 const swapBtn=document.createElement("button"); swapBtn.className="opt";
-swapBtn.textContent="Swap (S)";
+swapBtn.setAttribute("aria-label", "Swap hand roles");
+swapBtn.innerHTML=`<span class="b-name">Swap</span><span class="b-key">(S)</span>`;
 swapBtn.onclick=()=>{swapHands=!swapHands;updateRoleHelp()}; bar.appendChild(swapBtn);
 addEventListener("keydown",e=>{
   const k=parseInt(e.key); if(k>=1&&k<=SHAPES.length) setShape(k-1);
