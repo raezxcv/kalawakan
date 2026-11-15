@@ -52,12 +52,13 @@
   #cam .in{position:absolute;inset:0;transform:scaleX(-1);pointer-events:none}
   #cam video,#cam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
   
-  .cam-resizer{position:absolute;z-index:10;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#ffffff;background:rgba(18,18,22,0.85);border:1px solid rgba(255,255,255,0.22);border-radius:6px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,0.6);transition:background .18s ease,border-color .18s ease,transform .18s ease;touch-action:none}
-  .cam-resizer:hover{background:rgba(255,255,255,0.25);border-color:rgba(255,255,255,0.5);transform:scale(1.1)}
-  .cam-resizer-tl{top:5px;left:5px;cursor:nwse-resize}
-  .cam-resizer-tr{top:5px;right:5px;cursor:nesw-resize}
-  .cam-resizer-bl{bottom:5px;left:5px;cursor:nesw-resize}
-  .cam-resizer-br{bottom:5px;right:5px;cursor:nwse-resize}
+  /* Subtle, minimalist corner resize controls */
+  .cam-resizer{position:absolute;z-index:10;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#ffffff;opacity:.38;background:transparent;border:none;box-shadow:none;transition:opacity .18s ease,transform .18s ease;touch-action:none;user-select:none;-webkit-user-select:none}
+  .cam-resizer:hover,.cam-resizer:active{opacity:.95;transform:scale(1.12)}
+  .cam-resizer-tl{top:2px;left:2px;cursor:nwse-resize}
+  .cam-resizer-tr{top:2px;right:2px;cursor:nesw-resize}
+  .cam-resizer-bl{bottom:2px;left:2px;cursor:nesw-resize}
+  .cam-resizer-br{bottom:2px;right:2px;cursor:nwse-resize}
 
   /* Expand button is mobile-only; hidden on desktop where drag & resize are used */
   #cam-expand{display:none;position:absolute;top:8px;right:8px;z-index:8;width:26px;height:26px;border-radius:6px;background:rgba(18,18,20,0.75);border:1px solid rgba(255,255,255,0.15);color:#d4d4d8;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:all .18s ease;touch-action:manipulation;backdrop-filter:blur(8px)}
@@ -125,11 +126,11 @@
     #help{display:none;background:rgba(18,18,20,0.94);padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);margin-top:8px;pointer-events:auto;backdrop-filter:blur(12px);font-size:11px;line-height:1.5}
     #help.open{display:block}
     
-    /* BIGGER CAMERA PREVIEW ON MOBILE */
-    #cam{cursor:default;width:175px;height:132px;bottom:64px;right:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.8)}
+    /* BIGGER CAMERA PREVIEW ON MOBILE (WITH SUBTLE RESIZING) */
+    #cam{width:175px;height:132px;bottom:64px;right:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.8)}
     #cam.expanded{width:calc(100vw - 24px);height:215px;bottom:64px;right:12px}
     #cam-expand{display:flex}
-    .cam-resizer{display:none !important}
+    .cam-resizer{display:flex;opacity:.48;width:32px;height:32px}
 
     /* Perfectly Fitted Single-Row Mobile Toolbar */
     #bar{bottom:12px;padding:4px 8px;gap:4px;max-width:calc(100vw - 16px);justify-content:center;scroll-snap-type:x proximity}
@@ -204,28 +205,18 @@
     <video id="video" playsinline muted></video>
     <canvas id="ov" width="320" height="240"></canvas>
   </div>
-  <div class="cam-resizer cam-resizer-tl" data-dir="tl" title="Resize camera">
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <line x1="2" y1="11" x2="11" y2="2"></line>
-      <line x1="2" y1="7" x2="7" y2="2"></line>
-      <line x1="2" y1="3" x2="3" y2="2"></line>
+  <div class="cam-resizer cam-resizer-tl" data-dir="tl" title="Drag to resize">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <line x1="1" y1="9" x2="9" y2="1"></line>
+      <line x1="1" y1="5" x2="5" y2="1"></line>
+      <line x1="1" y1="1" x2="1" y2="1"></line>
     </svg>
   </div>
-  <div class="cam-resizer cam-resizer-tr" data-dir="tr" title="Resize camera">
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <path d="M5 2h9v9M14 2L7 9"/>
-    </svg>
-  </div>
-  <div class="cam-resizer cam-resizer-bl" data-dir="bl" title="Resize camera">
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <path d="M11 14H2V5M2 14l7-7"/>
-    </svg>
-  </div>
-  <div class="cam-resizer cam-resizer-br" data-dir="br" title="Resize camera">
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <line x1="14" y1="5" x2="5" y2="14"></line>
-      <line x1="14" y1="9" x2="9" y2="14"></line>
-      <line x1="14" y1="13" x2="13" y2="14"></line>
+  <div class="cam-resizer cam-resizer-br" data-dir="br" title="Drag to resize">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <line x1="11" y1="3" x2="3" y2="11"></line>
+      <line x1="11" y1="7" x2="7" y2="11"></line>
+      <line x1="11" y1="11" x2="11" y2="11"></line>
     </svg>
   </div>
   <button id="cam-expand" title="Expand camera preview" aria-label="Expand camera preview">
@@ -987,10 +978,10 @@ if (camExpandBtn) {
   };
 }
 
-// --- Desktop Draggable & Resizable Camera Feed ---
+// --- Draggable & Resizable Camera Feed (Desktop & Mobile) ---
 (function initDraggableCam(){
   const cam = document.getElementById("cam");
-  if (!cam || isMobile) return;
+  if (!cam) return;
 
   let isDragging = false;
   let isResizing = false;
@@ -1060,8 +1051,10 @@ if (camExpandBtn) {
     } else if (isResizing) {
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
-      const minW = 160, maxW = Math.min(750, window.innerWidth - 32);
-      const minH = 120, maxH = Math.min(560, window.innerHeight - 32);
+      const minW = isMobile ? 120 : 160;
+      const maxW = Math.min(isMobile ? 380 : 750, window.innerWidth - 20);
+      const minH = Math.round(minW * 0.75);
+      const maxH = Math.round(maxW * 0.75);
 
       let newW = startW;
       let newH = startH;
