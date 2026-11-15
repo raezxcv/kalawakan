@@ -1,121 +1,102 @@
-# Kalawakan 🌌
+# Kalawakan
 
-> **Kalawakan** *(Tagalog for "outer space" / "cosmos")* is an interactive 3D WebGL particle simulation featuring real-time AI hand gesture tracking. Morph between intricate celestial bodies, biological structures, and mythic creations using your hands or touch/mouse.
+> **Kalawakan** *(Tagalog for "outer space" / "cosmos")* is an interactive 3D WebGL particle simulation featuring real-time vision hand tracking. Morph smoothly between celestial bodies, biological structures, and complex forms using your hands, touch, or mouse.
 >
-> 🚀 **Live Portfolio**: [raelyivanreyes.vercel.app](https://raelyivanreyes.vercel.app/)  
-> 👤 **Created by**: [Raely](https://raelyivanreyes.vercel.app/)
+> - **Creator**: [Raely](https://raelyivanreyes.vercel.app/)
+> - **Portfolio**: [https://raelyivanreyes.vercel.app/](https://raelyivanreyes.vercel.app/)
 
-Powered by **Three.js** and **Google MediaPipe Hand Landmarker**, the experience simulates **20,000 glowing particles** transitioning smoothly across parametric 3D point clouds against a procedural cinematic nebula sky.
-
----
-
-## ✨ Features
-
-- **20,000 Dynamic Particles**: Real-time morphing animations between complex 3D parametric point clouds with custom GLSL shaders, point sizing, and soft depth attenuation (optimized to 12k on mobile).
-- **AI Hand Tracking**: Real-time multi-hand landmark detection running directly in the browser via WebAssembly/GPU acceleration with Google MediaPipe.
-- **Cinematic Procedural Universe**: Dynamic starfield and procedural Milky Way nebula skybox with parallax drift and cosmic dust lanes.
-- **Mobile-Optimized Experience**: Adaptive particle scaling, throttled vision inference (~25 FPS vision / 60 FPS render), larger responsive camera preview with expand toggle, and native touch gestures (drag to rotate, pinch to zoom & expand).
-- **Zero Build / Self-Contained**: Pure vanilla web implementation. No bundlers or build steps required.
-- **Dual Input Modes**: Seamless support for webcam hand gestures, touch screens, and classic mouse/keyboard controls.
+Powered by **Three.js** and **Google MediaPipe Hand Landmarker**, the experience simulates up to **20,000 glowing particles** transitioning smoothly across parametric 3D point clouds against a procedural nebula sky.
 
 ---
 
-## 🖐️ Hand Gesture Controls
+## Features
 
-Enable camera access to interact with the particle system using your hands. Everything runs locally on your device with complete privacy.
+- **Dynamic Particles**: Real-time morphing animations between parametric 3D point clouds with custom GLSL shaders, soft depth attenuation, and adaptive performance scaling (12,000 particles on mobile, 20,000 on desktop).
+- **Vision Hand Tracking**: Real-time multi-hand landmark detection running locally in the browser via WebAssembly and GPU acceleration with Google MediaPipe. Video is processed 100% on-device and is never stored or transmitted.
+- **Minimalist Modern Glassmorphism**: Polished monochrome UI with frosted glass cards, fluid entrance animations, and clean neutral typography.
+- **Cinematic Procedural Universe**: Dynamic starfield and procedural nebula skybox with parallax drift and cosmic dust lanes.
+- **Mobile-Optimized Experience**: Adaptive particle count, throttled hand landmark inference, prominent responsive camera preview with expand toggle, and native touch gestures (drag to rotate, pinch to zoom and expand).
+- **Zero Build / Standalone**: Pure vanilla web implementation. No bundlers or dependencies required to run.
+- **Multi-Input Controls**: Full support for webcam hand tracking, mobile multi-touch, and keyboard/mouse shortcuts.
+
+---
+
+## Hand Tracking Controls
+
+Enable camera access to interact with the particle system using your hands. All processing is local and private.
 
 | Hand | Action | Effect |
 | :--- | :--- | :--- |
-| **Left Hand** *(Object Selector)* | **1 Finger** (Index) | Morph to **Saturn** 🪐 |
-| | **2 Fingers** (Peace) | Morph to **DNA Double Helix** 🧬 |
-| | **3 Fingers** | Morph to **Chibi Robot** 🤖 |
-| | **4 Fingers** | Morph to **Dragon** 🐉 |
-| | **5 Fingers** (Open Palm) | Morph to **Spiral Galaxy** 🌌 |
+| **Left Hand** *(Object Selector)* | **1 Finger** (Index) | Morph to **Saturn** |
+| | **2 Fingers** (Peace) | Morph to **DNA Double Helix** |
+| | **3 Fingers** | Morph to **Robot** |
+| | **4 Fingers** | Morph to **Dragon** |
+| | **5 Fingers** (Open Palm) | Morph to **Galaxy** |
 | **Right Hand** *(Motion Controller)* | **Open / Close Palm** | **Expand / Collapse** particle dispersion |
 | | **Push Closer / Pull Away** | **Zoom In / Out** (depth scaling) |
-| | **Move & Tilt Palm** | **Rotate & Roll** the 3D model in space |
+| | **Move and Tilt Hand** | **Rotate and Roll** the 3D model |
 
-> *Tip: Click the **"Swap Hands"** button on the bottom toolbar if you prefer using your right hand for shape selection and your left hand for motion control.*
+> *Tip: Click the **"Swap (S)"** button on the bottom toolbar to switch which hand selects shapes and which hand controls motion.*
 
 ---
 
-## 📱 Mobile & Touch Controls
+## Mobile and Touch Controls
 
-- **Single Finger Drag**: Rotate the 3D celestial object in space.
+- **Single Finger Drag**: Rotate the 3D model in space.
 - **Two-Finger Pinch / Spread**: Zoom in/out and expand/collapse particle field.
-- **Bigger Camera Preview**: Sized prominently on mobile screens, with a tap-to-expand button in the corner for full-width view.
-- **Single-Row Floating Toolbar**: Fast shape switching with emojis without cluttering the screen.
-- **Collapsible Controls Guide**: Tap `[ Controls Guide ]` in the top corner to view instructions anytime without covering the 3D cosmos.
+- **Camera Preview**: Prominent display on mobile screens with an expand toggle for full-width view.
+- **Floating Toolbar**: Single-row clean pill navigation for fast shape switching.
+- **Controls Guide**: Tap `[ Controls Guide ]` in the top left to show or hide gesture instructions.
 
 ---
 
-## ⌨️ Mouse & Keyboard Fallback
+## Mouse and Keyboard Controls
 
-No webcam? You can skip the camera and use full desktop controls:
+When camera access is disabled, full desktop controls are supported:
 
-- **Keys `1` – `5`**: Switch between shapes:
+- **Keys 1 to 5**: Select shapes:
   - `1`: Saturn
   - `2`: DNA
   - `3`: Robot
   - `4`: Dragon
   - `5`: Galaxy
-- **Left Click + Drag**: Rotate the camera / model around any axis
-- **Mouse Wheel (Scroll)**: Expand / collapse particle dispersion
-- **Shift + Mouse Wheel**: Zoom camera in / out
+- **Left Click + Drag**: Rotate the model around any axis
+- **Mouse Wheel**: Expand / collapse particles
+- **Shift + Mouse Wheel**: Zoom in / out
+- **Key S**: Swap hand roles
 
 ---
 
-## 🪐 Morphing Shapes
+## Morphing Shapes
 
-1. **Saturn**: Gas giant featuring realistic atmospheric bands, Cassini and Encke divisions in the rings, planet-on-ring shadows, and orbiting moons (Titan and an icy moon).
+1. **Saturn**: Gas giant featuring atmospheric bands, Cassini and Encke ring divisions, planet shadows, and orbiting moons.
 2. **DNA**: Rotating double helix spiral with connecting base pairs.
-3. **Robot**: 3D chibi-style robot with glossy visor, glowing digital eyes, chest emblem, and waving arm.
-4. **Dragon**: Mythical serpentine dragon complete with scaled body, swan neck, horned head, bat wings, and spade tail.
-5. **Galaxy**: Majestic deep-space spiral galaxy with core bulge, spiral dust arms, and a faint halo.
+3. **Robot**: 3D chibi robot with visor, glowing eyes, chest emblem, and waving arm.
+4. **Dragon**: Mythical serpentine dragon with scaled body, swan neck, horned head, bat wings, and spade tail.
+5. **Galaxy**: Deep-space spiral galaxy with galactic core bulge, spiral arms, and faint halo.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-Because modern browsers enforce strict security policies (`getUserMedia` requires a secure context), camera access requires running via `localhost` or HTTPS.
+Because browsers require a secure context for `getUserMedia` camera permissions, run the project on `localhost` or via HTTPS.
 
-### Quick Start with a Local Server
-
-You can serve the project using any lightweight local server:
+### Running Locally
 
 **Using Python:**
 ```bash
 python -m http.server 8000
 ```
-Then navigate to: `http://localhost:8000/index.html` (or `/hand-morph.html`)
+Open `http://localhost:8000`
 
-**Using Node / npx:**
+**Using Node:**
 ```bash
 npx serve .
 ```
 
-**Using VS Code:**
-- Install the **Live Server** extension.
-- Right-click `index.html` and select **"Open with Live Server"**.
-
-### Deployment
-
-- **Vercel**: Import the [`raezxcv/kalawakan`](https://github.com/raezxcv/kalawakan) repository on [Vercel](https://vercel.com). Vercel serves the root URL (`/`) automatically via `index.html` with zero configuration.
-- **GitHub Pages**: In the repository, go to **Settings** > **Pages** > select branch `main` and root `/`. Your app will be accessible at:
-  `https://<your-username>.github.io/kalawakan/`
-
 ---
 
-## 🛠️ Built With
+## License and Credits
 
-- [Three.js](https://threejs.org/) — 3D WebGL graphics and scene management
-- [Google MediaPipe Tasks Vision](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker) — Real-time on-device machine learning for hand tracking
-- Vanilla JavaScript & GLSL shaders
-
----
-
-## 👨‍💻 Author
-
-Created by **Raely Ivan Reyes**  
-- Portfolio: [https://raelyivanreyes.vercel.app/](https://raelyivanreyes.vercel.app/)
-- GitHub: [@raezxcv](https://github.com/raezxcv)
+Created by [Raely](https://raelyivanreyes.vercel.app/).
+Built with Three.js and Google MediaPipe.
