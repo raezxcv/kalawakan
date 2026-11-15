@@ -2,7 +2,7 @@
 
 > **Kalawakan** *(Tagalog for "outer space" / "cosmos")* is an interactive 3D WebGL particle simulation featuring real-time vision hand tracking. Morph smoothly between celestial bodies, biological structures, and complex forms using your hands, touch, or mouse.
 >
-> - **Creator**: [Raely](https://raelyivanreyes.vercel.app/)
+> - **Creator**: [rei](https://raelyivanreyes.vercel.app/)
 > - **Portfolio**: [https://raelyivanreyes.vercel.app/](https://raelyivanreyes.vercel.app/)
 
 Powered by **Three.js** and **Google MediaPipe Hand Landmarker**, the experience simulates up to **20,000 glowing particles** transitioning smoothly across parametric 3D point clouds against a procedural nebula sky.
@@ -98,5 +98,5 @@ npx serve .
 
 ## License and Credits
 
-Created by [Raely](https://raelyivanreyes.vercel.app/).
+Created by [rei](https://raelyivanreyes.vercel.app/).
 Built with Three.js and Google MediaPipe.

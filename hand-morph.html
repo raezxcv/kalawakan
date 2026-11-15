@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Kalawakan · 3D Hand Morph</title>
 <meta name="description" content="Interactive 3D particle morphing cosmos with real-time hand tracking. Control 20,000 glowing particles with your hands or touch.">
-<meta name="author" content="Raely Ivan Reyes">
+<meta name="author" content="rei">
 <meta name="theme-color" content="#09090b">
 
 <!-- Social Preview & OpenGraph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Kalawakan · 3D Hand Morph">
-<meta property="og:description" content="Interactive 3D particle morphing cosmos with real-time hand tracking. Control 20,000 particles with your hands or touch. Made by Raely.">
+<meta property="og:description" content="Interactive 3D particle morphing cosmos with real-time hand tracking. Control 20,000 particles with your hands or touch. Made by rei.">
 <meta property="og:site_name" content="Kalawakan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Kalawakan · 3D Hand Morph">
-<meta name="twitter:description" content="Interactive 3D particle morphing cosmos with real-time hand tracking by Raely.">
+<meta name="twitter:description" content="Interactive 3D particle morphing cosmos with real-time hand tracking by rei.">
 
 <!-- Favicon / Logo Emblem -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2309090b' stroke='%23ffffff' stroke-opacity='0.25' stroke-width='2'/%3E%3Cellipse cx='32' cy='32' rx='23' ry='8.5' fill='none' stroke='%23ffffff' stroke-width='2' transform='rotate(-28 32 32)'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffffff'/%3E%3Ccircle cx='46' cy='22' r='2' fill='%23ffffff' fill-opacity='0.6'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2309090b' stroke='%23ffffff' stroke-opacity='0.2' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23ffffff'/%3E%3Cpath d='M32 26 C38 20 48 22 52 29 C56 36 54 44 47 49 C41 53 33 53 26 50' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M32 38 C26 44 16 42 12 35 C8 28 10 20 17 15 C23 11 31 11 38 14' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='49' cy='18' r='1.5' fill='%23ffffff' fill-opacity='0.8'/%3E%3Ccircle cx='15' cy='46' r='1.5' fill='%23ffffff' fill-opacity='0.8'/%3E%3C/svg%3E">
 
 <style>
   html,body{margin:0;height:100%;background:#09090b;color:#e4e4e7;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;overflow:hidden;touch-action:none}
@@ -57,7 +57,7 @@
   #start.closing{opacity:0;visibility:hidden;pointer-events:none}
   @keyframes startBgFade{from{opacity:0}to{opacity:1}}
 
-  #start-card{position:relative;max-width:440px;width:100%;max-height:92vh;overflow-y:auto;background:rgba(18,18,22,0.78);border:1px solid rgba(255,255,255,0.12);box-shadow:0 24px 60px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.08);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);border-radius:24px;padding:32px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;transform-origin:center center;animation:cardEntrance .55s cubic-bezier(0.16,1,0.3,1) both;scrollbar-width:none}
+  #start-card{position:relative;max-width:390px;width:100%;max-height:92vh;overflow-y:auto;background:rgba(18,18,22,0.78);border:1px solid rgba(255,255,255,0.12);box-shadow:0 24px 60px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.08);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);border-radius:24px;padding:32px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;transform-origin:center center;animation:cardEntrance .55s cubic-bezier(0.16,1,0.3,1) both;scrollbar-width:none}
   #start-card::-webkit-scrollbar{display:none}
   #start.closing #start-card{transform:scale(0.96) translateY(-10px);opacity:0;transition:transform .35s cubic-bezier(0.16,1,0.3,1),opacity .35s ease}
   @keyframes cardEntrance{0%{opacity:0;transform:scale(0.93) translateY(18px)}100%{opacity:1;transform:scale(1) translateY(0)}}
@@ -70,24 +70,16 @@
   .card-title{margin:0;font-size:28px;font-weight:700;letter-spacing:-0.02em;color:#ffffff}
   .card-desc{max-width:380px;margin:0;font-size:13.5px;line-height:1.55;color:#a1a1aa}
 
-  /* Minimalist Shape Sequence Track */
-  .modal-preview-banner{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px;box-sizing:border-box}
-  .preview-header{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:#71717a;margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-  .preview-morph-track{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
-  .track-item{font-size:12px;font-weight:500;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#d4d4d8}
-  .track-item.active{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.28);color:#ffffff}
-  .track-sep{color:#52525b;font-size:11px}
-
   .card-actions{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;margin-top:4px}
-  .btn-primary{width:100%;max-width:320px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:15px;font-weight:600;padding:13px 24px;border-radius:999px;border:none;background:#ffffff;color:#09090b;cursor:pointer;box-shadow:0 4px 20px rgba(255,255,255,0.12);transition:all .2s cubic-bezier(0.16,1,0.3,1);touch-action:manipulation}
-  .btn-primary:hover{background:#f4f4f5;transform:translateY(-1px);box-shadow:0 6px 24px rgba(255,255,255,0.2)}
-  .btn-primary:active{transform:scale(0.98);background:#e4e4e7}
-  .btn-primary:disabled{opacity:.75;cursor:wait;transform:none}
+  .btn-primary{width:100%;max-width:320px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:14.5px;font-weight:600;padding:12px 24px;border-radius:999px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#ffffff;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,0.35);transition:all .2s cubic-bezier(0.16,1,0.3,1);touch-action:manipulation}
+  .btn-primary:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.35);transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,0,0,0.5)}
+  .btn-primary:active{transform:scale(0.98);background:rgba(255,255,255,0.1)}
+  .btn-primary:disabled{opacity:.65;cursor:wait;transform:none}
   
   .btn-secondary{background:transparent;border:1px solid rgba(255,255,255,0.14);color:#a1a1aa;font-size:13px;font-weight:500;padding:9px 20px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .18s ease;touch-action:manipulation}
   .btn-secondary:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.28);color:#ffffff}
   
-  .btn-spinner{width:15px;height:15px;border:2px solid rgba(9,9,11,0.25);border-top-color:#09090b;border-radius:50%;animation:spin .75s linear infinite;display:inline-block}
+  .btn-spinner{width:15px;height:15px;border:2px solid rgba(255,255,255,0.25);border-top-color:#ffffff;border-radius:50%;animation:spin .75s linear infinite;display:inline-block}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   .card-privacy{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#71717a}
@@ -131,7 +123,6 @@
     .hero-logo-svg{width:48px;height:48px}
     .card-title{font-size:24px}
     .card-desc{font-size:12px}
-    .track-item{font-size:10.5px;padding:3px 8px}
     .btn-primary{font-size:14px;padding:12px 20px}
     #grain{display:none}
   }
@@ -143,8 +134,8 @@
 <div id="grain"></div>
 
 <!-- Top-right Creator Credit Link -->
-<a id="author-pill" href="https://raelyivanreyes.vercel.app/" target="_blank" rel="noopener noreferrer" title="View Raely's Portfolio">
-  <span>Made by <b>Raely</b></span>
+<a id="author-pill" href="https://raelyivanreyes.vercel.app/" target="_blank" rel="noopener noreferrer" title="View rei's Portfolio">
+  <span>Made by <b>rei</b></span>
   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
     <polyline points="15 3 21 3 21 9"></polyline>
@@ -156,10 +147,12 @@
 <div id="hud">
   <div class="hud-brand">
     <svg class="brand-logo-svg" viewBox="0 0 64 64" fill="none">
-      <circle cx="32" cy="32" r="30" fill="#121214" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-      <ellipse cx="32" cy="32" rx="23" ry="8.5" stroke="#ffffff" stroke-width="2.2" transform="rotate(-28 32 32)"/>
-      <circle cx="32" cy="32" r="7" fill="#ffffff"/>
-      <circle cx="46" cy="22" r="2" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="32" cy="32" r="30" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1.8"/>
+      <circle cx="32" cy="32" r="4" fill="#ffffff"/>
+      <path d="M 32 26 C 38 20 48 22 52 29 C 56 36 54 44 47 49 C 41 53 33 53 26 50" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M 32 38 C 26 44 16 42 12 35 C 8 28 10 20 17 15 C 23 11 31 11 38 14" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="49" cy="18" r="1.5" fill="#ffffff" fill-opacity="0.8"/>
+      <circle cx="15" cy="46" r="1.5" fill="#ffffff" fill-opacity="0.8"/>
     </svg>
     <span class="brand-title">KALAWAKAN</span>
   </div>
@@ -200,10 +193,15 @@
   <div id="start-card">
     <div class="logo-hero">
       <svg class="hero-logo-svg" width="56" height="56" viewBox="0 0 64 64" fill="none">
-        <circle cx="32" cy="32" r="30" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
-        <ellipse cx="32" cy="32" rx="23" ry="8.5" stroke="#ffffff" stroke-width="2.2" transform="rotate(-28 32 32)"/>
-        <circle cx="32" cy="32" r="7" fill="#ffffff"/>
-        <circle cx="46" cy="22" r="2" fill="rgba(255,255,255,0.6)"/>
+        <circle cx="32" cy="32" r="30" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1.8"/>
+        <circle cx="32" cy="32" r="4.5" fill="#ffffff"/>
+        <circle cx="32" cy="32" r="9" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
+        <path d="M 32 26 C 38 20 48 22 52 29 C 56 36 54 44 47 49 C 41 53 33 53 26 50" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M 32 38 C 26 44 16 42 12 35 C 8 28 10 20 17 15 C 23 11 31 11 38 14" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="49" cy="18" r="1.6" fill="#ffffff" fill-opacity="0.8"/>
+        <circle cx="15" cy="46" r="1.6" fill="#ffffff" fill-opacity="0.8"/>
+        <circle cx="53" cy="39" r="1.2" fill="#ffffff" fill-opacity="0.5"/>
+        <circle cx="11" cy="25" r="1.2" fill="#ffffff" fill-opacity="0.5"/>
       </svg>
     </div>
 
@@ -214,25 +212,6 @@
     <p class="card-desc">
       Control a living cosmos of 20,000 glowing particles with your hands. Morph smoothly between Saturn, DNA, Robot, Dragon, and Galaxy in real-time.
     </p>
-
-    <!-- Visual Shape Sequence Track -->
-    <div class="modal-preview-banner">
-      <div class="preview-header">
-        <span>Shape sequence</span>
-        <span>5 forms</span>
-      </div>
-      <div class="preview-morph-track">
-        <span class="track-item active">Saturn</span>
-        <span class="track-sep">•</span>
-        <span class="track-item">DNA</span>
-        <span class="track-sep">•</span>
-        <span class="track-item">Robot</span>
-        <span class="track-sep">•</span>
-        <span class="track-item">Dragon</span>
-        <span class="track-sep">•</span>
-        <span class="track-item">Galaxy</span>
-      </div>
-    </div>
 
     <div class="card-actions">
       <button id="go" class="btn-primary">
@@ -267,7 +246,7 @@
     </div>
 
     <div class="card-author">
-      Made by <a href="https://raelyivanreyes.vercel.app/" target="_blank" rel="noopener noreferrer">Raely</a>
+      Made by <a href="https://raelyivanreyes.vercel.app/" target="_blank" rel="noopener noreferrer">rei</a>
     </div>
   </div>
 </div>
