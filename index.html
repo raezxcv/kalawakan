@@ -60,10 +60,6 @@
   .cam-resizer-bl{bottom:2px;left:2px;cursor:nesw-resize}
   .cam-resizer-br{bottom:2px;right:2px;cursor:nwse-resize}
 
-  /* Expand button is mobile-only; hidden on desktop where drag & resize are used */
-  #cam-expand{display:none;position:absolute;top:8px;right:8px;z-index:8;width:26px;height:26px;border-radius:6px;background:rgba(18,18,20,0.75);border:1px solid rgba(255,255,255,0.15);color:#d4d4d8;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:all .18s ease;touch-action:manipulation;backdrop-filter:blur(8px)}
-  #cam-expand:hover{background:rgba(255,255,255,0.15);color:#ffffff;border-color:rgba(255,255,255,0.3)}
-  
   /* --- Minimalist Modern Glassmorphism Modal --- */
   #start{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(9,9,11,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:25;padding:20px;transition:opacity .35s cubic-bezier(0.16,1,0.3,1),visibility .35s ease;animation:startBgFade .45s ease both}
   #start.closing{opacity:0;visibility:hidden;pointer-events:none}
@@ -128,8 +124,6 @@
     
     /* BIGGER CAMERA PREVIEW ON MOBILE (WITH SUBTLE RESIZING) */
     #cam{width:175px;height:132px;bottom:64px;right:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.8)}
-    #cam.expanded{width:calc(100vw - 24px);height:215px;bottom:64px;right:12px}
-    #cam-expand{display:flex}
     .cam-resizer{display:flex;opacity:.48;width:32px;height:32px}
 
     /* Perfectly Fitted Single-Row Mobile Toolbar */
@@ -219,11 +213,6 @@
       <line x1="11" y1="11" x2="11" y2="11"></line>
     </svg>
   </div>
-  <button id="cam-expand" title="Expand camera preview" aria-label="Expand camera preview">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-    </svg>
-  </button>
 </div>
 
 <!-- Bottom Toolbar -->
@@ -970,14 +959,6 @@ if (mobileHelpBtn && helpEl) {
     helpEl.classList.toggle("open");
   };
 }
-const camExpandBtn = document.getElementById("cam-expand");
-if (camExpandBtn) {
-  camExpandBtn.onclick = (e) => {
-    e.stopPropagation();
-    document.getElementById("cam").classList.toggle("expanded");
-  };
-}
-
 // --- Draggable & Resizable Camera Feed (Desktop & Mobile) ---
 (function initDraggableCam(){
   const cam = document.getElementById("cam");
@@ -999,7 +980,7 @@ if (camExpandBtn) {
   }
 
   cam.addEventListener("pointerdown", (e) => {
-    if (e.target.closest("#cam-expand, button")) return;
+    if (e.target.closest("button")) return;
 
     const resizer = e.target.closest(".cam-resizer");
     if (resizer) {
