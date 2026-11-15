@@ -84,13 +84,11 @@ npx serve .
 - Install the **Live Server** extension.
 - Right-click `hand-morph.html` and select **"Open with Live Server"**.
 
-### GitHub Pages Deployment
+### Deployment
 
-To host Kalawakan live on GitHub Pages:
-1. Go to repository **Settings** > **Pages**.
-2. Under **Build and deployment**, select branch `main` and root `/`.
-3. Save, and your app will be accessible at:
-   `https://<your-username>.github.io/kalawakan/hand-morph.html`
+- **Vercel**: Simply import the [`raezxcv/kalawakan`](https://github.com/raezxcv/kalawakan) repository on [Vercel](https://vercel.com). Vercel serves the root URL (`/`) automatically via `index.html` and `vercel.json`.
+- **GitHub Pages**: In the repository, go to **Settings** > **Pages** > select branch `main` and root `/`. Your app will be accessible at:
+  `https://<your-username>.github.io/kalawakan/`
 
 ---
 

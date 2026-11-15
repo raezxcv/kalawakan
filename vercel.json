@@ -1,0 +1,6 @@
+﻿{
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/hand-morph", "destination": "/hand-morph.html" }
+  ]
+}
