@@ -1,6 +1,9 @@
 # Kalawakan 🌌
 
-> **Kalawakan** *(Tagalog for "outer space" / "cosmos")* is an interactive 3D WebGL particle simulation featuring real-time AI hand gesture tracking. Morph between intricate celestial bodies, biological structures, and mythic creations using your hands or keyboard/mouse.
+> **Kalawakan** *(Tagalog for "outer space" / "cosmos")* is an interactive 3D WebGL particle simulation featuring real-time AI hand gesture tracking. Morph between intricate celestial bodies, biological structures, and mythic creations using your hands or touch/mouse.
+>
+> 🚀 **Live Portfolio**: [raelyivanreyes.vercel.app](https://raelyivanreyes.vercel.app/)  
+> 👤 **Created by**: [Raely](https://raelyivanreyes.vercel.app/)
 
 Powered by **Three.js** and **Google MediaPipe Hand Landmarker**, the experience simulates **20,000 glowing particles** transitioning smoothly across parametric 3D point clouds against a procedural cinematic nebula sky.
 
@@ -8,11 +11,12 @@ Powered by **Three.js** and **Google MediaPipe Hand Landmarker**, the experience
 
 ## ✨ Features
 
-- **20,000 Dynamic Particles**: Real-time morphing animations between complex 3D parametric point clouds with custom GLSL shaders, point sizing, and soft depth attenuation.
+- **20,000 Dynamic Particles**: Real-time morphing animations between complex 3D parametric point clouds with custom GLSL shaders, point sizing, and soft depth attenuation (optimized to 12k on mobile).
 - **AI Hand Tracking**: Real-time multi-hand landmark detection running directly in the browser via WebAssembly/GPU acceleration with Google MediaPipe.
 - **Cinematic Procedural Universe**: Dynamic starfield and procedural Milky Way nebula skybox with parallax drift and cosmic dust lanes.
+- **Mobile-Optimized Experience**: Adaptive particle scaling, throttled vision inference (~25 FPS vision / 60 FPS render), larger responsive camera preview with expand toggle, and native touch gestures (drag to rotate, pinch to zoom & expand).
 - **Zero Build / Self-Contained**: Pure vanilla web implementation. No bundlers or build steps required.
-- **Dual Input Modes**: Seamless support for both webcam hand gestures and classic mouse/keyboard controls.
+- **Dual Input Modes**: Seamless support for webcam hand gestures, touch screens, and classic mouse/keyboard controls.
 
 ---
 
@@ -32,6 +36,16 @@ Enable camera access to interact with the particle system using your hands. Ever
 | | **Move & Tilt Palm** | **Rotate & Roll** the 3D model in space |
 
 > *Tip: Click the **"Swap Hands"** button on the bottom toolbar if you prefer using your right hand for shape selection and your left hand for motion control.*
+
+---
+
+## 📱 Mobile & Touch Controls
+
+- **Single Finger Drag**: Rotate the 3D celestial object in space.
+- **Two-Finger Pinch / Spread**: Zoom in/out and expand/collapse particle field.
+- **Bigger Camera Preview**: Sized prominently on mobile screens, with a tap-to-expand button in the corner for full-width view.
+- **Single-Row Floating Toolbar**: Fast shape switching with emojis without cluttering the screen.
+- **Collapsible Controls Guide**: Tap `[ Controls Guide ]` in the top corner to view instructions anytime without covering the 3D cosmos.
 
 ---
 
@@ -73,7 +87,7 @@ You can serve the project using any lightweight local server:
 ```bash
 python -m http.server 8000
 ```
-Then navigate to: `http://localhost:8000/hand-morph.html`
+Then navigate to: `http://localhost:8000/index.html` (or `/hand-morph.html`)
 
 **Using Node / npx:**
 ```bash
@@ -82,11 +96,11 @@ npx serve .
 
 **Using VS Code:**
 - Install the **Live Server** extension.
-- Right-click `hand-morph.html` and select **"Open with Live Server"**.
+- Right-click `index.html` and select **"Open with Live Server"**.
 
 ### Deployment
 
-- **Vercel**: Simply import the [`raezxcv/kalawakan`](https://github.com/raezxcv/kalawakan) repository on [Vercel](https://vercel.com). Vercel serves the root URL (`/`) automatically via `index.html` and `vercel.json`.
+- **Vercel**: Import the [`raezxcv/kalawakan`](https://github.com/raezxcv/kalawakan) repository on [Vercel](https://vercel.com). Vercel serves the root URL (`/`) automatically via `index.html` with zero configuration.
 - **GitHub Pages**: In the repository, go to **Settings** > **Pages** > select branch `main` and root `/`. Your app will be accessible at:
   `https://<your-username>.github.io/kalawakan/`
 
@@ -97,3 +111,11 @@ npx serve .
 - [Three.js](https://threejs.org/) — 3D WebGL graphics and scene management
 - [Google MediaPipe Tasks Vision](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker) — Real-time on-device machine learning for hand tracking
 - Vanilla JavaScript & GLSL shaders
+
+---
+
+## 👨‍💻 Author
+
+Created by **Raely Ivan Reyes**  
+- Portfolio: [https://raelyivanreyes.vercel.app/](https://raelyivanreyes.vercel.app/)
+- GitHub: [@raezxcv](https://github.com/raezxcv)
